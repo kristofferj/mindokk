@@ -13,29 +13,35 @@ var _ = require('lodash')
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-  var fileList = read(dropboxConfig.folder);
+  var fileList = read(dropboxConfig.folder).map( function(file) {
+    return {file: file}
+  });
+
+  console.log(fileList)
 
   var db = []
 
   jsonfile.readFile(dropboxConfig.db, function(err, db) {
     if (db) {
+      // if new files
+      fileList.map( function(file) {
+        var hit = db.filter(function(item) {
+          return file.file == item.file
+        }).length > 0
+        console.log(hit)
+        if (hit) {
+          console.log('hit', file.file)
+        } else {
+          console.log('new', file.file)
+          db.push(file)
+        }
+      });
+
       res.render('index', { title: 'Mindokk admin', db: db});
     } else {
       console.error('NO OBJ!')
     }
   });
-
-  // if new files
-  // var list = fileList.map( function(item) {
-  //   if (!_.has(db, item)) {
-  //     db.push({
-  //       file: item
-  //     })
-  //   }
-  // });
-
-
-
 });
 
 router.post('/save', function(req, res, next) {
