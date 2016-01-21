@@ -2,8 +2,23 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
   
+  form(action="/save" method="post")
+    ul.files
+      each item, i in db
+        - console.log('item', item)
+        li
+          td
+            input(type="checkbox")
+          td
+            label= item.file
+            input(type="hidden" name="file" value=item.file)
+          td
+            input(type="text" name="time" value=item.time)
+          td
+            input(type="text" name="position" value=item.position)
+    button(type="submit") Lagre
+
   p
     a(href="/turnOn") Skru på
   p
