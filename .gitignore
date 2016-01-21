@@ -3,6 +3,9 @@ logs
 *.log
 npm-debug.log*
 
+# Mindokk
+./config/dropbox.js
+
 # Runtime data
 pids
 *.pid
