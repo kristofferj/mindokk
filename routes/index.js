@@ -28,7 +28,6 @@ router.get('/', function(req, res, next) {
         var hit = db.filter(function(item) {
           return file.file == item.file
         }).length > 0
-        console.log(hit)
         if (hit) {
           console.log('hit', file.file)
         } else {

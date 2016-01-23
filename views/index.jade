@@ -1,25 +1,45 @@
 extends layout
 
 block content
-  h1= title
-  
-  form(action="/save" method="post")
-    ul.files
-      each item, i in db
-        - console.log('item', item)
-        li
-          td
-            input(type="checkbox")
-          td
-            label= item.file
-            input(type="hidden" name="file" value=item.file)
-          td
-            input(type="text" name="time" value=item.time)
-          td
-            input(type="text" name="position" value=item.position)
-    button(type="submit") Lagre
 
-  p
-    a(href="/turnOn") Skru på
-  p
-    a(href="/turnOff") Skru av
+  .main
+    h1= title
+    form(action="/save" method="post")
+      ul.files
+        each item, i in db
+          - console.log('item', item)
+          li
+            td
+              input(type="checkbox")
+            td
+              label= item.file
+              input(type="hidden" name="file" value=item.file)
+            td
+              input(type="text" name="time" value=item.time placeholder="sek")
+            td
+              input(type="text" name="position" value=item.position)
+            td
+              input(type="checkbox" name="file" value=item.deleted)
+              if item.deleted
+                a.restore() Gjenopprett
+              else
+                a.delete() Slett
+              
+      button(type="submit") Lagre
+  
+  
+  form.settings
+    h2 Instillinger
+    fieldset
+      legend Automatisk påskruing og avskruing
+      .form-field
+        label Skru PÅ klokka
+        input(type="text")
+      .form-field
+        label Skru AV klokka
+        input(type="text")
+    button(type="submit") Lagre instillinger
+    
+    .power
+      a(href="/turnOn") Skru på
+      a(href="/turnOff") Skru av

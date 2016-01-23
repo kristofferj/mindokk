@@ -1,20 +1,41 @@
 body
-  padding: 50px
-  font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif
 
-a
-  color: #00B7FF
+  font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif
+  padding: 1rem
+  @media screen and (min-width: 768px)
+    padding: 50px
+
+.main
+  h1
+    font-weight: 100
+    font-size: 3rem
+    margin-top: 0
+    padding-top: 0
+  button
+    background-color: white
+    border: 1px solid black
+    color: black
+    margin-top: 1rem
+    font-size: 1.5rem
+    text-transform: uppercase
+    padding: .5rem 2rem
+    font-weight: 100
+    letter-spacing: .09rem
 
 
 ul.files
   margin: 0
   padding: 0
   display: block
+  @media screen and (min-width: 768px)
+    max-width: 85%
+    padding-right: 3rem
+  box-sizing: border-box
   li
     display: block
     margin: 0
     padding: .5em 0
-    background-color: red
+    background-color: #dadada
     margin-bottom: 2px
   label
     width: 10em
@@ -23,3 +44,37 @@ ul.files
     width: 4em
   input[name="position"]
     display: none
+
+
+
+.settings
+  @media screen and (min-width: 768px)
+    position: fixed
+    top: 0
+    right: 0
+    width: 15%
+    height: 100%
+    background-color: #fafafa
+    padding: 1rem
+
+
+  h2
+    font-weight: 100
+    font-size: 3rem
+  .power
+    position: absolute
+    bottom: 3rem
+    a
+      float: left
+      margin-right: .5rem
+      display: block
+      margin-top: 0rem
+      background-color: white
+      border: 1px solid black
+      color: black
+      font-size: 1rem
+      text-transform: uppercase
+      padding: .5rem 1rem
+      font-weight: 100
+      letter-spacing: .09rem
+      text-decoration: none
