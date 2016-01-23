@@ -25,4 +25,20 @@ $(document).ready( function() {
     $(this).prev().prop('checked', true);
   });
 
+  $('a.powerButton').on('click', function(event) {
+
+
+    $.ajax({
+      url: $(this).attr('href'),
+      data: '',
+      success: function() {
+        console.log('success')
+      },
+      dataType: 'JSON'
+    });
+
+    event.preventDefault();
+    return false;
+  })
+
 });

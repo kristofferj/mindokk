@@ -97,14 +97,18 @@ router.get('/show', function(req, res, next) {
 router.get('/turnOn', function(req, res, next) {
   console.log('turn ON projector')
   projector.turnOn();
-  res.render('index', { title: 'OK' });
+  res.writeHead(200, {"Content-Type": "application/json"});
+  var json = JSON.stringify({status: 'OK'});
+  res.end(json);
 });
 
 /* turn off projector */
 router.get('/turnOff', function(req, res, next) {
   console.log('turn OFF projector')
   projector.turnOff();
-  res.render('index', { title: 'OK' });
+  res.writeHead(200, {"Content-Type": "application/json"});
+  var json = JSON.stringify({status: 'OK'});
+  res.end(json);
 });
 
 module.exports = router;
