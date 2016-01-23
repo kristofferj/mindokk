@@ -13,7 +13,13 @@ block content
               input(type="checkbox")
             td
               label= item.file
+              if item.isDirectory == 'true'
+                span (mappe)
+                input(type="hidden" name="isDirectory" value="true")
+              else
+                input(type="hidden" name="isDirectory" value="false")
               input(type="hidden" name="file" value=item.file)
+              
             td
               input(type="text" name="time" value=item.time placeholder="sek")
             td

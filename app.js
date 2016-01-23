@@ -9,6 +9,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+var dropboxConfig = require('./config/dropbox')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -29,6 +30,8 @@ app.use(require('node-sass-middleware')({
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/dropbox', express.static(dropboxConfig.folder));
+
 
 app.use('/', routes);
 app.use('/users', users);

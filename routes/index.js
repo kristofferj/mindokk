@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var http = require('http');
 var projector = require('../lib/projector')
-var read = require('fs-readdir-recursive')
+// var read = require('fs-readdir-recursive')
+var fs = require('fs')
 var dropboxConfig = require('../config/dropbox')
 
 var jsonfile = require('jsonfile')
@@ -13,11 +14,31 @@ var _ = require('lodash')
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-  var fileList = read(dropboxConfig.folder).map( function(file) {
-    return {file: file}
+  // var fileList = fs(dropboxConfig.folder).map( function(file) {
+  //   return {file: file}
+  // });
+
+  fileList = []
+
+  var path = dropboxConfig.folder
+
+  fs.readdir(path, function (err, files) {
+    if (err) {
+        throw err;
+    }
+    files.map(function (file) {
+      var fullFile = path + '/' + file;
+      var isFile = fs.statSync(fullFile).isFile();
+      var isDirectory = fs.statSync(fullFile).isDirectory();
+      fileList.push({
+        file:file,
+        isFile: isFile,
+        isDirectory: isDirectory
+      });
+    })
   });
 
-  console.log(fileList)
+  console.log('filelist', fileList)
 
   var db = []
 
@@ -26,6 +47,7 @@ router.get('/', function(req, res, next) {
       // if new files
       fileList.map( function(file) {
         var hit = db.filter(function(item) {
+          console.log('file', file)
           return file.file == item.file
         }).length > 0
         if (hit) {
@@ -46,10 +68,12 @@ router.get('/', function(req, res, next) {
 router.post('/save', function(req, res, next) {
   var db = []
   req.body.file.map( function(file, i) {
+    console.log('isDirectory', req.body.isDirectory[i])
     db.push({
       file: file,
       time: req.body.time[i],
-      position: req.body.position[i]
+      position: req.body.position[i],
+      isDirectory: req.body.isDirectory[i]
     })
   })
 
@@ -58,6 +82,13 @@ router.post('/save', function(req, res, next) {
   })
 
   res.render('save', { title: 'OK', status: "Saved" });
+});
+
+
+router.get('/show', function(req, res, next) {
+  jsonfile.readFile(dropboxConfig.db, function(err, db) {
+    res.render('show', { db: db, path: dropboxConfig.folder });
+  });
 });
 
 

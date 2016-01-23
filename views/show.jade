@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/show.css')
+    script(src="/javascripts/jquery-2.2.0.min.js")
+    script(src="/javascripts/jquery-ui.min.js")
+    script(src="/javascripts/main-show.js")
+    meta(http-equiv="refresh" content="10")
+  body
+    h1 Test
+    ul.items
+      each item, i in db
+        - console.log(item)
+        li.item(data-time=item.time)
+          if (item.isDirectory)
+            - var file = '/dropbox/'+ item.file + '/index.html'
+            iframe(src=file)
+            = file
+          
