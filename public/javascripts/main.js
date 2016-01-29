@@ -25,6 +25,23 @@ $(document).ready( function() {
     $(this).prev().prop('checked', true);
   });
 
+  $("form.files").on( "submit", function( event ) {
+    event.preventDefault();
+    console.log( $( this ) );
+    $.ajax({
+      type: 'post',
+      url: '/save',
+      data: $(this).serializeArray(),
+      success: function() {
+        console.log('success')
+      },
+      error: function() {
+        console.error('Something went wrong');
+      },
+      dataType: 'JSON'
+    });
+  });
+
   $('a.powerButton').on('click', function(event) {
 
 

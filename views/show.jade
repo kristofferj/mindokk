@@ -14,13 +14,12 @@ html
         - var file = '/dropbox/'+ item.file
         if (item.isDirectory == 'true')
           li.item.edge(data-time=item.time)
-            iframe(src=file + '/index.html' width="2560" height="720")
+            iframe(src=file + '/index.html' width="100%" height="100%")
         else if (isVideo)
-          - console.log(video)
           li.item.video(data-time=item.time)
-            video(width="2560" height="720")
+            video(width="100%" height="100%" autoplay)
               source(src=file type="video/mp4")
         else 
-          h1.error Could not find #{file}
+          h1.hidden.error Could not find #{file}
         
         

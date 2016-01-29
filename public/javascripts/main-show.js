@@ -1,27 +1,27 @@
 var currentItem = 0;
 var numberOfItems = 0;
+var time = 0;
+
 
 function show(item) {
+  console.log(currentItem)
   $('ul.items li').hide();
+  time = $($('ul.items li')[currentItem]).data('time')
   $(item).show();
-  nextItem(item);
-}
-function nextItem(item) {
-
-  var item = $('ul.items li')[currentItem];
-  var time = $(item).data('time');
-  console.log(time, item);
   if (currentItem < numberOfItems) {
     currentItem++;
-    //setTimeout(function(){ show($('ul.items li')[currentItem])}, time * 1000);
-
+    setTimeout(function(){ show($('ul.items li')[currentItem])}, time * 1000);
   } else {
     location.reload();
   }
-
+}
+function nextItem(item) {
+  time = $(item).data('time');
+  console.log(time, item);
 }
 
 $(document).ready( function() {
-  numerOfItems = $('ul.items li').length;
-  $('ul.items li').first().show();
+  numberOfItems = $('ul.items li').length;
+  console.log('numberOfItems', numberOfItems);
+  show($('ul.items li').first());
 });

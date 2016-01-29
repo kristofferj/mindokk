@@ -30,11 +30,13 @@ router.get('/', function(req, res, next) {
       var fullFile = path + '/' + file;
       var isFile = fs.statSync(fullFile).isFile();
       var isDirectory = fs.statSync(fullFile).isDirectory();
-      fileList.push({
-        file:file,
-        isFile: isFile,
-        isDirectory: isDirectory
-      });
+      if (file && file != '.DS_Store') {
+        fileList.push({
+          file:file,
+          isFile: isFile,
+          isDirectory: isDirectory
+        });
+      }
     })
   });
 
@@ -53,10 +55,11 @@ router.get('/', function(req, res, next) {
         if (hit) {
           console.log('hit', file.file)
         } else {
-          console.log('new', file.file)
           db.push(file)
         }
       });
+
+      console.log('db', db)
 
       res.render('index', { title: 'Mindokk admin', db: db});
     } else {
@@ -68,7 +71,6 @@ router.get('/', function(req, res, next) {
 router.post('/save', function(req, res, next) {
   var db = []
   req.body.file.map( function(file, i) {
-    console.log('isDirectory', req.body.isDirectory[i])
     db.push({
       file: file,
       time: req.body.time[i],
@@ -77,11 +79,15 @@ router.post('/save', function(req, res, next) {
     })
   })
 
+
+
   jsonfile.writeFile(dropboxConfig.db, db, function (err) {
     console.error(err)
   })
 
-  res.render('save', { title: 'OK', status: "Saved" });
+  //res.render('save', { title: 'OK', status: "Saved" });
+  res.writeHead(200, {"Content-Type": "application/json"});
+  var json = JSON.stringify({status: 'OK'});
 });
 
 

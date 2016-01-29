@@ -4,7 +4,7 @@ block content
 
   .main
     h1= title
-    form(action="/save" method="post")
+    form.files(action="/save" method="post")
       ul.files
         each item, i in db
           - console.log('item', item)
@@ -13,7 +13,7 @@ block content
               input(type="checkbox")
             td
               label= item.file
-              if item.isDirectory == 'true'
+              if item.isDirectory == 'true' || item.isDirectory == true
                 span (mappe)
                 input(type="hidden" name="isDirectory" value="true")
               else
@@ -23,7 +23,8 @@ block content
             td
               input(type="number" name="time" value=item.time placeholder="sek")
             td
-              input(type="text" name="position" value=item.position)
+              - var position = item.position || position
+              input(type="text" name="position" value=position)
             td
               input(type="checkbox" name="file" value=item.deleted)
               if item.deleted
