@@ -1,3 +1,13 @@
+@import "animation"
+@import "keyframe"
+
+@include keyframe(rotate)
+  0%
+    transform: rotate(0)
+  100%
+    transform: rotate(359deg)
+
+
 body
 
   font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif
@@ -21,6 +31,26 @@ body
     padding: .5rem 2rem
     font-weight: 100
     letter-spacing: .09rem
+
+form.files
+  $green: #94D941
+  button.submit
+    outline: none
+    padding-left: 1rem
+    i
+      display: inline-block
+      height: 1rem
+      width: 1rem
+      margin-right: 1rem
+    &.loading
+      i
+        background-color: #ccc
+        @include animation(0, .5s, rotate)
+    &.success
+      i
+        background-color: $green
+        border-color: $green
+        color: #fff
 
 
 ul.files

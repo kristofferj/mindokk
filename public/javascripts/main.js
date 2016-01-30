@@ -1,6 +1,4 @@
-console.log('Init!');
 $(document).ready( function() {
-  console.log('Ready!');
   $('.files').sortable({
     change: function(event, ui) {
       console.log('Changed!');
@@ -25,26 +23,33 @@ $(document).ready( function() {
     $(this).prev().prop('checked', true);
   });
 
-  $("form.files").on( "submit", function( event ) {
-    event.preventDefault();
-    console.log( $( this ) );
-    $.ajax({
-      type: 'post',
-      url: '/save',
-      data: $(this).serializeArray(),
-      success: function() {
-        console.log('success')
-      },
-      error: function() {
-        console.error('Something went wrong');
-      },
-      dataType: 'JSON'
+  $("form.files").on("submit", function( event ) {
+    var data = $("form.files").serializeArray();
+    $('form.files button.submit').addClass('loading')
+
+    var request = $.ajax({
+      type: "POST",
+      url: "/save",
+      data: data,
+      dataType: "JSON"
     });
+
+    request.done(function( msg ) {
+      $('form.files button.submit').removeClass('loading')
+      $('form.files button.submit').addClass('success').delay(3000).queue(function(next){
+        $(this).removeClass('success');
+        next();
+      });
+    });
+    request.fail(function( jqXHR, textStatus ) {
+      alert( "Request failed: " + textStatus );
+    });
+
+    event.preventDefault();
+    return false;
   });
 
   $('a.powerButton').on('click', function(event) {
-
-
     $.ajax({
       url: $(this).attr('href'),
       data: '',
@@ -53,7 +58,6 @@ $(document).ready( function() {
       },
       dataType: 'JSON'
     });
-
     event.preventDefault();
     return false;
   })

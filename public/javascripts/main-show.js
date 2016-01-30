@@ -6,12 +6,21 @@ var time = 0;
 function show(item) {
   console.log(currentItem)
   $('ul.items li').hide();
+  $('ul.items li.video video').each( function(i, video) {
+    console.log('paused', video);
+    video.pause();
+    video.currentTime = 0;
+  });
   time = $($('ul.items li')[currentItem]).data('time')
   console.log('time', time)
   $(item).show();
+  $(item).find('video').get(0).play();
+
   if (currentItem < numberOfItems) {
     currentItem++;
-    setTimeout(function(){ show($('ul.items li')[currentItem])}, time * 1000);
+    setTimeout( function(){
+      show($('ul.items li')[currentItem])
+    }, time * 1000);
   } else {
     location.reload();
   }
