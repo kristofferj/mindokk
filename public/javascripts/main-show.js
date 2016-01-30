@@ -16,8 +16,11 @@ function show(item) {
   $(item).show();
   $(item).find('video').get(0).play();
 
+
+  currentItem++;
   if (currentItem < numberOfItems) {
-    currentItem++;
+    console.log(currentItem, 'of', numberOfItems, 'time:', time);
+
     setTimeout( function(){
       show($('ul.items li')[currentItem])
     }, time * 1000);

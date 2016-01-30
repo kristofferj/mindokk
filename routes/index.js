@@ -70,7 +70,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/save', function(req, res, next) {
   var db = []
-  req.body.file.map( function(file, i) {
+  req.body.file && req.body.file && req.body.file.map( function(file, i) {
     db.push({
       file: file,
       time: req.body.time[i],
@@ -78,16 +78,14 @@ router.post('/save', function(req, res, next) {
       isDirectory: req.body.isDirectory[i]
     })
   })
-
-
-
-  jsonfile.writeFile(dropboxConfig.db, db, function (err) {
-    console.error(err)
-  })
+  // jsonfile.writeFile(dropboxConfig.db, db, function (err) {
+  //   console.error(err)
+  // })
 
   //res.render('save', { title: 'OK', status: "Saved" });
-  res.writeHead(200, {"Content-Type": "application/json"});
-  var json = JSON.stringify({status: 'OK'});
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.write(JSON.stringify({status:'OK'}));
+  res.end();
 });
 
 
