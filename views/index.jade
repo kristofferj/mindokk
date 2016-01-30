@@ -26,11 +26,7 @@ block content
               - var position = item.position || position
               input(type="text" name="position" value=position)
             td
-              input(type="checkbox" name="file" value=item.deleted)
-              if item.deleted
-                a.restore() Gjenopprett
-              else
-                a.delete() Slett
+              a.delete(href="#") Slett            
               
       button(type="submit") Lagre
   

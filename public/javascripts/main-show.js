@@ -7,6 +7,7 @@ function show(item) {
   console.log(currentItem)
   $('ul.items li').hide();
   time = $($('ul.items li')[currentItem]).data('time')
+  console.log('time', time)
   $(item).show();
   if (currentItem < numberOfItems) {
     currentItem++;
@@ -14,10 +15,6 @@ function show(item) {
   } else {
     location.reload();
   }
-}
-function nextItem(item) {
-  time = $(item).data('time');
-  console.log(time, item);
 }
 
 $(document).ready( function() {

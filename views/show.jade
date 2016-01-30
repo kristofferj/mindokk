@@ -11,6 +11,7 @@ html
     ul.items
       each item, i in db
         - var isVideo = item.file.split('mp4').length > 1
+        - var isImage = (item.file.split('png').length > 1) || (item.file.split('jpg').length > 1) || (item.file.split('gif').length > 1)
         - var file = '/dropbox/'+ item.file
         if (item.isDirectory == 'true')
           li.item.edge(data-time=item.time)
@@ -19,6 +20,9 @@ html
           li.item.video(data-time=item.time)
             video(width="100%" height="100%" autoplay)
               source(src=file type="video/mp4")
+        else if (isImage)
+          li.item.image(data-time=item.time)
+            img(src=file)
         else 
           h1.hidden.error Could not find #{file}
         

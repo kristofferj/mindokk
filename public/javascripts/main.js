@@ -18,7 +18,7 @@ $(document).ready( function() {
 
   $('a.delete').on('click', function() {
     console.log($(this).prev());
-    $(this).prev().prop('checked', true);
+    $(this).parent().remove();
   });
 
   $('a.restore').on('click', function() {
