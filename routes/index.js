@@ -78,9 +78,9 @@ router.post('/save', function(req, res, next) {
       isDirectory: req.body.isDirectory[i]
     })
   })
-  // jsonfile.writeFile(dropboxConfig.db, db, function (err) {
-  //   console.error(err)
-  // })
+  jsonfile.writeFile(dropboxConfig.db, db, function (err) {
+    console.error(err)
+  })
 
   //res.render('save', { title: 'OK', status: "Saved" });
   res.writeHead(200, { 'Content-Type': 'application/json' });
