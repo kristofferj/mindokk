@@ -5,6 +5,7 @@ npm-debug.log*
 
 # Mindokk
 ./config/dropbox.js
+./config/settings.js
 
 # Runtime data
 pids

@@ -38,6 +38,7 @@ function animatMessages() {
           } else {
             console.log('completed messages');
             hasMessages = false
+            $(".message-container .message").remove();
             show($('ul.items li')[currentItem])
           }
         }
