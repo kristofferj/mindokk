@@ -97,6 +97,28 @@ router.get('/show', function(req, res, next) {
 
 
 
+router.post('/saveLastId', function(req, res, next) {
+  jsonfile.readFile(dropboxConfig.settings, function(err, orgSettings) {
+    var json = '';
+    if (req.body.lastId) {
+      var lastId = req.body.lastId;
+      JSON.stringify({status: 'OK'});
+      res.writeHead(200, {"Content-Type": "application/json"});
+      var newSettings = orgSettings;
+      newSettings.lastId = lastId;
+      jsonfile.writeFile(dropboxConfig.settings, newSettings, function (err) {
+        console.error(err)
+      });
+    } else {
+      JSON.stringify({status: 'error'});
+      res.writeHead(500, {"Content-Type": "application/json"});
+    }
+    res.end(json);
+  });
+});
+
+
+
 /* turn on projector */
 router.get('/turnOn', function(req, res, next) {
   console.log('turn ON projector')
@@ -105,6 +127,16 @@ router.get('/turnOn', function(req, res, next) {
   var json = JSON.stringify({status: 'OK'});
   res.end(json);
 });
+
+
+router.get('/getLastMessageId', function(req, res, next) {
+  jsonfile.readFile(dropboxConfig.settings, function(err, settings) {
+    res.writeHead(200, {"Content-Type": "application/json"});
+    var json = JSON.stringify({status: 'OK', lastId: settings.lastId });
+    res.end(json);
+  });
+});
+
 
 /* turn off projector */
 router.get('/turnOff', function(req, res, next) {

@@ -1,3 +1,7 @@
+@font-face {
+  font-family: "Univers";
+  src: url("/fonts/univers.otf"); }
+
 body {
   background-color: #000;
   overflow: hidden; }
@@ -36,5 +40,33 @@ body {
       transform-origin: top left; }
   body ul li {
     display: none; }
+  body .message {
+    -webkit-font-feature-settings: "kern";
+    -moz-font-feature-settings: "kern";
+    -ms-font-feature-settings: "kern";
+    font-feature-settings: "kern";
+    text-rendering: geometricPrecision;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #fff;
+    font-family: "Univers";
+    font-size: 90vh;
+    line-height: 130vh;
+    text-transform: uppercase;
+    white-space: nowrap;
+    display: inline-block;
+    min-width: 200vw;
+    overflow: hidden;
+    -webkit-transform-origin: top left;
+    -moz-transform-origin: top left;
+    -ms-transform-origin: top left;
+    -o-transform-origin: top left;
+    transform-origin: top left;
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    transform: translateX(100%); }
 
 /*# sourceMappingURL=show.css.map */

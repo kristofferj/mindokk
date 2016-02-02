@@ -5,9 +5,12 @@ html
     link(rel='stylesheet', href='/stylesheets/show.css')
     script(src="/javascripts/jquery-2.2.0.min.js")
     script(src="/javascripts/jquery-ui.min.js")
+    //script(src="/javascripts/transit.min.js")
+    script(src="/javascripts/velocity.min.js")
     script(src="/javascripts/main-show.js")
   body
     h1 Test
+    .message-container
     ul.items
       each item, i in db
         - var isVideo = item.file.split('mp4').length > 1
