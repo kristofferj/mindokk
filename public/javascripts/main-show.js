@@ -9,17 +9,18 @@ var messages = [];
 var currentMessage = 0;
 var lastMessageId = 2;
 
-function animatMessage() {
-  $(".message-container .message")
-}
-
+var debug = false;
 
 function animatMessages() {
+  console.log('animating message', currentMessage)
   var width = window.screen.availWidth
-
   $('.message').hide();
   var x = ($(".message-container .message:eq("+currentMessage+")").width() * -1);
   var duration = $(".message-container .message:eq("+currentMessage+")").width() * 4;
+  if (debug) {
+    duration = 5000
+  }
+
   $(".message-container .message:eq("+currentMessage+")")
     .show()
     .velocity({
@@ -38,6 +39,7 @@ function animatMessages() {
           } else {
             console.log('completed messages');
             hasMessages = false
+            currentMessage = 0
             $(".message-container .message").remove();
             show($('ul.items li')[currentItem])
           }
@@ -60,9 +62,11 @@ var checkForNewMessages = function() {
           console.log('No new messages!');
           hasMessages = false;
         }
+        return hasMessages
       });
     }
   });
+
 }
 
 
@@ -80,7 +84,7 @@ var playMessages = function() {
       $.post('/saveLastId', {'lastId': messages[messages.length-1].id});
       // showMessage(messages[0]);
       $(messages).each( function(i, item) {
-        console.log(item);
+        console.log('should show', item);
         $('.message-container').append(
           $('<div/>', {
             text: item.content,
@@ -92,9 +96,8 @@ var playMessages = function() {
       animatMessages();
     } else {
       console.log('no new messages. lets loop');
-      // loopPlaying = true;
-      // hasMessages = false;
-      // show($('ul.items li')[currentItem]);
+      hasMessages = false;
+      show($('ul.items li')[currentItem]);
     }
   });
 }
@@ -112,26 +115,32 @@ function show(item) {
   if (hasMessages) {
     $('ul.items li').hide();
     playMessages();
-    return false;
+    console.log('hasMessages in show')
   } else {
+    console.log('has no Messages in show')
+    checkForNewMessages();
     time = $($('ul.items li')[currentItem]).data('time')
 
     // debug
-    // time = 5;
+    if (debug) {
+      time = 5;
+    }
 
     console.log('time', time)
-    $(item).show();
-    $(item).find('video').get(0).play();
-    currentItem++;
-    checkForNewMessages();
+
+
     if (currentItem < numberOfItems) {
-      console.log(currentItem, 'of', numberOfItems, 'time:', time);
+      $(item).show();
+      $(item).find('video').get(0).play();
+      console.log(currentItem, 'of', numberOfItems - 1, 'time:', time);
       setTimeout( function(){
         show($('ul.items li')[currentItem])
       }, time * 1000);
     } else {
+      console.log('Reload')
       location.reload();
     }
+    currentItem++;
   }
 }
 
