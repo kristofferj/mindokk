@@ -126,12 +126,12 @@ function show(item) {
       time = 5;
     }
 
-    console.log('time', time)
-
 
     if (currentItem < numberOfItems) {
       $(item).show();
-      $(item).find('video').get(0).play();
+      if ( $(item).hasClass('video') && $(item).find('video')) {
+        $(item).find('video').get(0).play();
+      }
       console.log(currentItem, 'of', numberOfItems - 1, 'time:', time);
       setTimeout( function(){
         show($('ul.items li')[currentItem])

@@ -13,17 +13,19 @@ html
     .message-container
     ul.items
       each item, i in db
+        - console.log('video', item.file.split('mp4').length > 1)
+        - console.log('image', (item.file.split('png').length > 1) || (item.file.split('jpg').length > 1) || (item.file.split('gif').length > 1))
         - var isVideo = item.file.split('mp4').length > 1
         - var isImage = (item.file.split('png').length > 1) || (item.file.split('jpg').length > 1) || (item.file.split('gif').length > 1)
         - var file = '/dropbox/'+ item.file
         if (item.isDirectory == 'true')
           li.item.edge(data-time=item.time)
             iframe(src=file + '/index.html' width="100%" height="100%")
-        else if (isVideo)
+        if (isVideo)
           li.item.video(data-time=item.time)
             video(width="100%" height="100%" loop)
               source(src=file type="video/mp4")
-        else if (isImage)
+        if (isImage)
           li.item.image(data-time=item.time)
             img(src=file)
         else 
